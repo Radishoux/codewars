@@ -189,6 +189,7 @@ function part1(splittedInput) {
 
 function part2(splittedInput) {
   let totalRolls = 0
+  let removes = 0
 
   for (let y = 0; y < splittedInput.length; y++) {
     for (let x = 0; x < splittedInput.length; x++) {
