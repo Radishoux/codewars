@@ -137,11 +137,11 @@ let input = `...@@...@..@...@@...@@.@@@@@.@.@..@@@.@@@@@@@@@..@.@@.@@@.@...@.@.@
 @@.@@@@@...@@@@@@..@@....@.@@...@@.@@......@.@@@.@.@..@.@@@@.@@@@..@@@.@@.@...@@@@..@@@@.@@.@@@@@@..@@@..@@..@@..@@@@@@.@..@@@@..@@@@@.@@@
 @...@.@@@@.@@@.@...@@.@@@@@@@@.@.@@@@@@@.@@@@@...@.@@.@@...@.@.@@.@.@@@@.@...@@@@@@@@@@@@@.@.@.@@.@.@.@..@@@@@@@.@@.@@@@@@@@@@@@@@@@.@@@@.`;
 
-console.log(input.length);
+// console.log(input.length);
 let splittedInput = input.split("\n")
 
-console.log(splittedInput.length);
-console.log(splittedInput[0].length);
+// console.log(splittedInput.length);
+// console.log(splittedInput[0].length);
 
 function part1(splittedInput) {
   let totalRolls = 0
@@ -184,4 +184,48 @@ function part1(splittedInput) {
   return totalRolls
 }
 
-console.log(part1(splittedInput));
+// console.log(part1(splittedInput));
+
+
+function part2(splittedInput) {
+  let totalRolls = 0
+
+  for (let y = 0; y < splittedInput.length; y++) {
+    for (let x = 0; x < splittedInput.length; x++) {
+      let checkRolls = 0
+      if (splittedInput[y][x] == "@") {
+        if (x !== (splittedInput.length - 1) && splittedInput[y][x + 1] == "@") {
+          checkRolls = checkRolls + 1
+        }
+        if (x !== 0 && splittedInput[y][x - 1] == "@") {
+          checkRolls = checkRolls + 1
+        }
+        if (y !== 0 && splittedInput[y - 1][x] == "@") {
+          checkRolls = checkRolls + 1
+        }
+        if (y !== (splittedInput.length - 1) && splittedInput[y + 1][x] == "@") {
+          checkRolls = checkRolls + 1
+        }
+        if (y !== 0 && x !== (splittedInput.length - 1) && splittedInput[y - 1][x + 1] == "@") {
+          checkRolls = checkRolls + 1
+        }
+        if (x !== 0 && y !== (splittedInput.length - 1) && splittedInput[y + 1][x - 1] == "@") {
+          checkRolls = checkRolls + 1
+        }
+        if (x !== (splittedInput.length - 1) && y !== (splittedInput.length - 1) && splittedInput[y + 1][x + 1] == "@") {
+          checkRolls = checkRolls + 1
+        }
+        if (x !== 0 && y !== 0 && splittedInput[y - 1][x - 1] == "@") {
+          checkRolls = checkRolls + 1
+        }
+
+        if (checkRolls < 4) {
+          totalRolls = totalRolls + 1
+        }
+      }
+    }
+  }
+  return totalRolls
+}
+
+console.log(part2(splittedInput));
