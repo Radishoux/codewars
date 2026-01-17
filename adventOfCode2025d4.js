@@ -147,6 +147,7 @@ function part1(splittedInput) {
   let totalRolls = 0
 
   for (let y = 0; y < splittedInput.length; y++) {
+    console.log(`Checking position  y:${y} totalRolls:${totalRolls}`);
     for (let x = 0; x < splittedInput.length; x++) {
       let checkRolls = 0
       if (splittedInput[y][x] == "@") {
@@ -188,40 +189,49 @@ function part1(splittedInput) {
 
 
 function part2(splittedInput) {
+
   let totalRolls = 0
-  let removes = 0
+  let repeats = true
+  let checkRolls = 0
 
-  for (let y = 0; y < splittedInput.length; y++) {
-    for (let x = 0; x < splittedInput.length; x++) {
-      let checkRolls = 0
-      if (splittedInput[y][x] == "@") {
-        if (x !== (splittedInput.length - 1) && splittedInput[y][x + 1] == "@") {
-          checkRolls = checkRolls + 1
-        }
-        if (x !== 0 && splittedInput[y][x - 1] == "@") {
-          checkRolls = checkRolls + 1
-        }
-        if (y !== 0 && splittedInput[y - 1][x] == "@") {
-          checkRolls = checkRolls + 1
-        }
-        if (y !== (splittedInput.length - 1) && splittedInput[y + 1][x] == "@") {
-          checkRolls = checkRolls + 1
-        }
-        if (y !== 0 && x !== (splittedInput.length - 1) && splittedInput[y - 1][x + 1] == "@") {
-          checkRolls = checkRolls + 1
-        }
-        if (x !== 0 && y !== (splittedInput.length - 1) && splittedInput[y + 1][x - 1] == "@") {
-          checkRolls = checkRolls + 1
-        }
-        if (x !== (splittedInput.length - 1) && y !== (splittedInput.length - 1) && splittedInput[y + 1][x + 1] == "@") {
-          checkRolls = checkRolls + 1
-        }
-        if (x !== 0 && y !== 0 && splittedInput[y - 1][x - 1] == "@") {
-          checkRolls = checkRolls + 1
-        }
+  while (repeats == true) {
+    repeats = false
+    for (let y = 0; y < splittedInput.length; y++) {
+      console.log(`Checking position  y:${y} totalRolls:${totalRolls}`);
+      for (let x = 0; x < splittedInput.length; x++) {
+        checkRolls = 0
+        if (splittedInput[y][x] == "@") {
+          if (x !== (splittedInput.length - 1) && splittedInput[y][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && splittedInput[y][x - 1] == "@") {
+            checkRolls++
+          }
+          if (y !== 0 && splittedInput[y - 1][x] == "@") {
+            checkRolls++
+          }
+          if (y !== (splittedInput.length - 1) && splittedInput[y + 1][x] == "@") {
+            checkRolls++
+          }
+          if (y !== 0 && x !== (splittedInput.length - 1) && splittedInput[y - 1][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && y !== (splittedInput.length - 1) && splittedInput[y + 1][x - 1] == "@") {
+            checkRolls++
+          }
+          if (x !== (splittedInput.length - 1) && y !== (splittedInput.length - 1) && splittedInput[y + 1][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && y !== 0 && splittedInput[y - 1][x - 1] == "@") {
+            checkRolls++
+          }
 
-        if (checkRolls < 4) {
-          totalRolls = totalRolls + 1
+          if (checkRolls < 4) {
+            totalRolls++
+            repeats = true
+            splittedInput[y] = splittedInput[y].substring(0, x) + "." + splittedInput[y].substring(x + 1);
+            splittedInput[y][x] = "."
+          }
         }
       }
     }
@@ -229,4 +239,161 @@ function part2(splittedInput) {
   return totalRolls
 }
 
-console.log(part2(splittedInput));
+// console.log(part2(splittedInput));
+
+
+function part3(splittedInput, totalRolls, loops) {
+
+  let checkRolls = 0
+  let repeats = false
+  for (let y = 0; y < splittedInput.length; y++) {
+    for (let x = 0; x < splittedInput.length; x++) {
+      checkRolls = 0
+      if (splittedInput[y][x] == "@") {
+        if (x !== (splittedInput.length - 1) && splittedInput[y][x + 1] == "@") {
+          checkRolls++
+        }
+        if (x !== 0 && splittedInput[y][x - 1] == "@") {
+          checkRolls++
+        }
+        if (y !== 0 && splittedInput[y - 1][x] == "@") {
+          checkRolls++
+        }
+        if (y !== (splittedInput.length - 1) && splittedInput[y + 1][x] == "@") {
+          checkRolls++
+        }
+        if (y !== 0 && x !== (splittedInput.length - 1) && splittedInput[y - 1][x + 1] == "@") {
+          checkRolls++
+        }
+        if (x !== 0 && y !== (splittedInput.length - 1) && splittedInput[y + 1][x - 1] == "@") {
+          checkRolls++
+        }
+        if (x !== (splittedInput.length - 1) && y !== (splittedInput.length - 1) && splittedInput[y + 1][x + 1] == "@") {
+          checkRolls++
+        }
+        if (x !== 0 && y !== 0 && splittedInput[y - 1][x - 1] == "@") {
+          checkRolls++
+        }
+
+        if (checkRolls < 4) {
+          totalRolls++
+          splittedInput[y] = splittedInput[y].substring(0, x) + "." + splittedInput[y].substring(x + 1);
+          repeats = true
+        }
+      }
+    }
+  }
+  console.log(`Loop ${loops} - Total rolls so far: ${totalRolls} - Repeats: ${repeats}`);
+  return repeats ? part3(splittedInput, totalRolls, loops + 1) : totalRolls
+}
+
+// console.log(part3(splittedInput, 0, 0));
+
+
+function part4(splittedInput) {
+
+  let totalRolls = 0
+  let repeats = true
+  let checkRolls = 0
+  let checkedRolls = 0
+
+  while (repeats == true) {
+    repeats = false
+    for (let y = 0; y < splittedInput.length; y++) {
+      for (let x = 0; x < splittedInput.length; x++) {
+        checkRolls = 0
+        if (splittedInput[y][x] == "@") {
+          if (x !== (splittedInput.length - 1) && splittedInput[y][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && splittedInput[y][x - 1] == "@") {
+            checkRolls++
+          }
+          if (y !== 0 && splittedInput[y - 1][x] == "@") {
+            checkRolls++
+          }
+          if (y !== (splittedInput.length - 1) && splittedInput[y + 1][x] == "@") {
+            checkRolls++
+          }
+          if (y !== 0 && x !== (splittedInput.length - 1) && splittedInput[y - 1][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && y !== (splittedInput.length - 1) && splittedInput[y + 1][x - 1] == "@") {
+            checkRolls++
+          }
+          if (x !== (splittedInput.length - 1) && y !== (splittedInput.length - 1) && splittedInput[y + 1][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && y !== 0 && splittedInput[y - 1][x - 1] == "@") {
+            checkRolls++
+          }
+
+          checkedRolls += 8
+
+          if (checkRolls < 4) {
+            totalRolls++
+            repeats = true
+            splittedInput[y] = splittedInput[y].substring(0, x) + "." + splittedInput[y].substring(x + 1);
+          }
+        }
+      }
+    }
+  }
+  console.log(`Total checked rolls: ${checkedRolls}`);
+  return totalRolls
+}
+
+// console.log(part4(splittedInput));
+
+
+function part5(splittedInput) {
+
+  let totalRolls = 0
+  let checkRolls = 0
+  let checkedRolls = 0
+
+    for (let y = 0; y < splittedInput.length; y++) {
+      for (let x = 0; x < splittedInput.length; x++) {
+        checkRolls = 0
+        if (splittedInput[y][x] == "@") {
+          if (x !== (splittedInput.length - 1) && splittedInput[y][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && splittedInput[y][x - 1] == "@") {
+            checkRolls++
+          }
+          if (y !== 0 && splittedInput[y - 1][x] == "@") {
+            checkRolls++
+          }
+          if (y !== (splittedInput.length - 1) && splittedInput[y + 1][x] == "@") {
+            checkRolls++
+          }
+          if (y !== 0 && x !== (splittedInput.length - 1) && splittedInput[y - 1][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && y !== (splittedInput.length - 1) && splittedInput[y + 1][x - 1] == "@") {
+            checkRolls++
+          }
+          if (x !== (splittedInput.length - 1) && y !== (splittedInput.length - 1) && splittedInput[y + 1][x + 1] == "@") {
+            checkRolls++
+          }
+          if (x !== 0 && y !== 0 && splittedInput[y - 1][x - 1] == "@") {
+            checkRolls++
+          }
+
+          checkedRolls += 8
+
+          if (checkRolls < 4) {
+            totalRolls++
+            splittedInput[y] = splittedInput[y].substring(0, x) + "." + splittedInput[y].substring(x + 1);
+            x = 0
+            y = 0
+          }
+        }
+      }
+  }
+  console.log(`Total checked rolls: ${checkedRolls}`);
+  return totalRolls
+}
+
+console.log(part5(splittedInput));
